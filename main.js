@@ -69,30 +69,32 @@ const getTable = async (URL, mountPoint) => {
 
 
 
-        
-                tr.addEventListener('click', (event) => {
-                    submitButton.removeEventListener('click', ()=>{createPost(URL, data)})
-                    submitButton.textContent = "Edit"
-                    submitButton.addEventListener('click', (event) => {
-                        event.stopPropagation()
-                        event.stopImmediatePropagation()
-                        editPost(URL, {
-                            companyName: tr.querySelectorAll('td')[0].textContent,
-                            contactName: tr.querySelectorAll('td')[1].textContent,
-                            contactTitle: tr.querySelectorAll('td')[2].textContent
-                        }, key)
-                    })
-                    event.stopImmediatePropagation()
-                    event.stopPropagation()
-                    compNameInput.value = tr.querySelectorAll('td')[0].textContent
-                    contNameInput.value = tr.querySelectorAll('td')[1].textContent
-                    contTitleInput.value = tr.querySelectorAll('td')[2].textContent
-                    console.log(tr)
-                    let key = tr.getAttribute('key')
+
+        tr.addEventListener('click', (event) => {
+            compNameInput.value = tr.querySelectorAll('td')[0].textContent
+                contNameInput.value = tr.querySelectorAll('td')[1].textContent
+                contTitleInput.value = tr.querySelectorAll('td')[2].textContent 
+            submitButton.removeEventListener('click', () => { createPost(URL, data) })
+            submitButton.textContent = "Edit"
+            submitButton.addEventListener('click', (event) => {
+                event.stopPropagation()
+                event.stopImmediatePropagation()
+                
+                editPost(URL, {
+                    id: key,
+                    companyName: compNameInput.value,
+                    contactName: contNameInput.value,
+                    contactTitle: contTitleInput.value
+                }, +key)
+            })
 
 
-                })
-            
+            console.log(tr)
+            let key = tr.getAttribute('key')
+
+
+        })
+
 
 
 
@@ -128,7 +130,7 @@ const editPost = async (URL, data, id) => {
         body: JSON.stringify(data)
     })
 
-    table.innerHTML = ''
+    document.querySelector('table').innerHTML = ''
     getTable(URL, root)
 }
 
