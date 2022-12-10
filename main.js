@@ -69,29 +69,30 @@ const getTable = async (URL, mountPoint) => {
 
 
 
-        document.querySelectorAll('tr')
-            .forEach(tra => {
-                tra.addEventListener('click', (event) => {
+        
+                tr.addEventListener('click', (event) => {
+                    submitButton.removeEventListener('click', ()=>{createPost(URL, data)})
+                    submitButton.textContent = "Edit"
                     submitButton.addEventListener('click', (event) => {
                         event.stopPropagation()
                         event.stopImmediatePropagation()
                         editPost(URL, {
-                            companyName: tra.querySelectorAll('td')[0].textContent,
-                            contactName: tra.querySelectorAll('td')[1].textContent,
-                            contactTitle: tra.querySelectorAll('td')[2].textContent
+                            companyName: tr.querySelectorAll('td')[0].textContent,
+                            contactName: tr.querySelectorAll('td')[1].textContent,
+                            contactTitle: tr.querySelectorAll('td')[2].textContent
                         }, key)
                     })
                     event.stopImmediatePropagation()
                     event.stopPropagation()
-                    compNameInput.value = tra.querySelectorAll('td')[0].textContent
-                    contNameInput.value = tra.querySelectorAll('td')[1].textContent
-                    contTitleInput.value = tra.querySelectorAll('td')[2].textContent
-                    console.log(tra)
-                    let key = tra.getAttribute('key')
+                    compNameInput.value = tr.querySelectorAll('td')[0].textContent
+                    contNameInput.value = tr.querySelectorAll('td')[1].textContent
+                    contTitleInput.value = tr.querySelectorAll('td')[2].textContent
+                    console.log(tr)
+                    let key = tr.getAttribute('key')
 
 
                 })
-            })
+            
 
 
 
