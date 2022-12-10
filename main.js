@@ -71,6 +71,8 @@ const getTable = async (URL, mountPoint) => {
 
 
         tr.addEventListener('click', (event) => {
+            event.stopPropagation()
+                event.stopImmediatePropagation()
             compNameInput.value = tr.querySelectorAll('td')[0].textContent
                 contNameInput.value = tr.querySelectorAll('td')[1].textContent
                 contTitleInput.value = tr.querySelectorAll('td')[2].textContent 
