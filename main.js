@@ -72,8 +72,14 @@ const getTable = async (URL, mountPoint) => {
         document.querySelectorAll('tr')
             .forEach(tra => {
                 tra.addEventListener('click', (event) => {
-                    submitButton.addEventListener('click', ()=>{
-                        editPost(URL, data, key)
+                    submitButton.addEventListener('click', (event) => {
+                        event.stopPropagation()
+                        event.stopImmediatePropagation()
+                        editPost(URL, {
+                            companyName: tra.querySelectorAll('td')[0].textContent,
+                            contactName: tra.querySelectorAll('td')[1].textContent,
+                            contactTitle: tra.querySelectorAll('td')[2].textContent
+                        }, key)
                     })
                     event.stopImmediatePropagation()
                     event.stopPropagation()
@@ -82,7 +88,7 @@ const getTable = async (URL, mountPoint) => {
                     contTitleInput.value = tra.querySelectorAll('td')[2].textContent
                     console.log(tra)
                     let key = tra.getAttribute('key')
-                    
+
 
                 })
             })
