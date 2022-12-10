@@ -6,7 +6,11 @@ const contTitleInput = document.querySelector('.contact-title')
 const submitButton = document.querySelector('.submit')
 const table = document.querySelector('table')
 
-const data = {}
+const data = {
+    companyName: compNameInput.value,
+    contactName: contNameInput.value,
+    contactTitle: contTitleInput.value
+}
 
 window.addEventListener('load', () => {
     getTable(URL, root)
@@ -54,6 +58,8 @@ const getTable = async (URL, mountPoint) => {
 
 
         removeButton.addEventListener('click', async (event) => {
+            event.stopImmediatePropagation()
+            event.stopPropagation()
             document.querySelector('table').innerHTML = ''
             let id = event.target.parentNode.getAttribute('key')
             await deletePOST(URL, id)
@@ -64,17 +70,19 @@ const getTable = async (URL, mountPoint) => {
 
 
         document.querySelectorAll('tr')
-            .forEach(tr => {
-                tr.addEventListener('click', (event) => {
-                    compNameInput.value = tr.querySelectorAll('td')[0].textContent
-                    contNameInput.value = tr.querySelectorAll('td')[1].textContent
-                    contTitleInput.value = tr.querySelectorAll('td')[2].textContent
-                    console.log(tr)
-                    console.log(event.target.key)
-                    submitButton.addEventListener('click', () => {
-                    
-                        editPost(URL, { companyName: compNameInput.value, contNameInput: contNameInput.value, contactTitle: contTitleInput.value }, event.target.key)
+            .forEach(tra => {
+                tra.addEventListener('click', (event) => {
+                    submitButton.addEventListener('click', ()=>{
+                        editPost(URL, data, key)
                     })
+                    event.stopImmediatePropagation()
+                    event.stopPropagation()
+                    compNameInput.value = tra.querySelectorAll('td')[0].textContent
+                    contNameInput.value = tra.querySelectorAll('td')[1].textContent
+                    contTitleInput.value = tra.querySelectorAll('td')[2].textContent
+                    console.log(tra)
+                    let key = tra.getAttribute('key')
+                    
 
                 })
             })
